@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+actor "Usuário comum" as user
+actor "Administrador" as admin
+actor "Sistema externo" as system
+user --> (Visualizar índice Liraa)
+user --> (Consultar índice Liraa)
+admin --> (Gerenciar usuários)
+admin --> (Gerar relatórios)
+admin --> (Gerenciar informações do Liraa)
+system --> (Enviar informações do Liraa)
+@enduml

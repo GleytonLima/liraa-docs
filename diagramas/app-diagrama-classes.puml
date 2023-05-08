@@ -1,0 +1,149 @@
+@startuml
+
+interface EstratoResumo {
+    +numero: number
+    +iip: number
+}
+
+interface ClassificacaoEstratoIIP {
+    +ordem: number
+    +quantidade: number
+    +percentual: number
+    +risco: string
+}
+
+interface Criadouro {
+    +sigla: string
+    +descricao: string
+}
+
+interface CriadouroLevantamento {
+    +criadouro: Criadouro
+    +quantidade: number
+    +percentual: number
+}
+
+interface Bairro {
+    +numero: number
+    +nome: string
+    +quantidadeQuarteiroes: number
+}
+
+interface BairroAmostra {
+    +bairro: Bairro
+    +quarteiroesSorteados: number[]
+}
+
+interface DadosAmostraEstrato {
+    +quantidadeImoveisProgramados: number
+    +estimativaImoveisPorQuarteirao: number
+    +quantidadeQuarteiroes: number
+    +percentualQuarteiroes: number
+    +intervaloQuarteiroes: number
+    +quarteiraoInicial: number
+    +bairros: BairroAmostra[]
+}
+
+class ExecucaoAedes {
+    -quantidadeTerrenoBaldio: number
+    -outrosImoveis: number
+    -criadourosLevantamento: CriadouroLevantamento[]
+    +deserialize(json: any): ExecucaoAedes
+    +calcularTotalImoveis(): number
+    +calcularTotalRecipientes(): number
+    +extrairQuantidade(sigla: string): number
+}
+
+
+class Execucao {
+    -estrato: Estrato
+    -imoveisInspecionados: number
+    -execucaoAedesAegypti: ExecucaoAedes
+    -execucaoAedesAlbopictus: ExecucaoAedes
+    +deserialize(json: any): Execucao
+    +calcularIIP(): any
+}
+
+class Estrato {
+    -numero: number
+    -quantidadeImoveis: number
+    -bairros: Bairro[]
+    -dadosAmostra: DadosAmostraEstrato
+    -execucao: Execucao
+    +extrairQuantidadeQuarteiroes(): number
+}
+
+class LevantamentoResumo {
+  - iipAegypti: number
+  - ibAegypti: number
+  - iipAlbopictus: number
+  - ibAlbopictus: number
+  - classificacoesEstratoIipAegypti: ClassificacaoEstratoIIP[]
+  - criadourosAegypti: CriadouroLevantamento[]
+  - relatorioIndice: RelatorioIndice
+  + constructor(levantamento: Levantamento)
+  + serialize(): any
+  + gerarLevantamentoResumoTodasExecucoes(execucoes: Execucao[]): LevantamentoResumo
+}
+
+class RelatorioIndice {
+  - estratoNumero: string
+  - totalImoveisProgramados: number
+  - totalImoveisInspecionados: number
+  - totalTBInspecionadosAegypti: number
+  - totalOutrosInspecionadosAegypti: number
+  - totalTBInspecionadosAlbopictus: number
+  - totalOutrosInspecionadosAlbopictus: number
+  - percentualPerda: number
+  - iipAegypti: number
+  - iipAlbopictus: number
+  - ibAegypti: number
+  - ibAlbopictus: number
+  - totalRecipientesAegypti: number
+  - totalRecipientesAlbopictus: number
+  - tiposRecipientesAegypti: any
+  + atualizarTipoRecipiente(c: CriadouroLevantamento): void
+  + calcularTotalImoveisInspecionadosAegypti(): number
+  + calcularTotalImoveisInspecionadosAlbopictus(): number
+}
+
+class Levantamento {
+    - id: string
+    - municipio: Municipio
+    - ano: number
+    - periodoInicio: string
+    - periodoFim: string
+    - quantidadeImoveisProgramados: number
+    - estratos: Estrato[]
+    - execucoes?: Execucao[]
+    - levantamentoResumo?: LevantamentoResumo
+    + deserialize(levantamento: any): Levantamento
+    + gerarRelatorioSorteioAmostra(nomeRelatorio: string): any
+}
+class Municipio {
+    municipioUF: string;
+    municipioNome: string;
+    municipioIBGE: number;
+    quantidadeImoveis: number;
+}
+
+LevantamentoResumo --> ClassificacaoEstratoIIP
+LevantamentoResumo --> CriadouroLevantamento
+LevantamentoResumo --> RelatorioIndice
+Levantamento --> LevantamentoResumo
+Levantamento --> Execucao
+
+Levantamento --> Municipio
+Levantamento --> Estrato
+
+CriadouroLevantamento --> Criadouro
+ExecucaoAedes --> CriadouroLevantamento
+Execucao --> Estrato
+Execucao --> ExecucaoAedes
+Estrato --> DadosAmostraEstrato
+DadosAmostraEstrato --> BairroAmostra
+BairroAmostra --> Bairro
+Estrato --> Bairro
+
+
+@enduml
