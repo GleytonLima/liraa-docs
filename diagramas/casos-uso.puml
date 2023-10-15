@@ -3,10 +3,14 @@ left to right direction
 actor "Usuário comum" as user
 actor "Administrador" as admin
 actor "Sistema externo" as system
-user --> (Visualizar índice Liraa)
-user --> (Consultar índice Liraa)
+user --> (Gerenciamento Levantamentos)
+(Gerenciamento Levantamentos) ..> (Configurar Estratos)
+(Gerenciamento Levantamentos) ..> (Gerar Sorteio)
+(Gerenciamento Levantamentos) ..> (Registrar Trabalho LIRAa)
+(Gerenciamento Levantamentos) ..> (Visualizar Resumo LIRAa)
+(Gerenciamento Levantamentos) ..> (Enviar dados LIRAa)
+(Configurar Estratos) ..> (Configurar Bairros)
 admin --> (Gerenciar usuários)
-admin --> (Gerar relatórios)
-admin --> (Gerenciar informações do Liraa)
-system --> (Enviar informações do Liraa)
+admin --> (Gerenciar Dashboards)
+system --> (Enviar dados LIRAa)
 @enduml
