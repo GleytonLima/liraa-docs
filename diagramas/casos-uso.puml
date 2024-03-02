@@ -3,14 +3,17 @@ left to right direction
 actor "Usuário comum" as user
 actor "Administrador" as admin
 actor "Sistema externo" as system
+user --> (Registrar-se, \nmediante confirmação admin)
 user --> (Gerenciamento Levantamentos)
-(Gerenciamento Levantamentos) ..> (Configurar Estratos)
-(Gerenciamento Levantamentos) ..> (Gerar Sorteio)
-(Gerenciamento Levantamentos) ..> (Registrar Trabalho LIRAa)
-(Gerenciamento Levantamentos) ..> (Visualizar Resumo LIRAa)
-(Gerenciamento Levantamentos) ..> (Enviar dados LIRAa)
-(Configurar Estratos) ..> (Configurar Bairros)
 admin --> (Gerenciar usuários)
+(Gerenciamento Levantamentos) ..> (Configurar Estratos)
+(Gerenciamento Levantamentos) ..> (Gerar Sorteio Quarteirões)
+(Gerenciamento Levantamentos) ..> (Registrar Trabalho LIRAa)
+(Visualizar Resumo LIRAa) ..> (Enviar dados LIRAa)
+(Gerenciamento Levantamentos) ..> (Visualizar Resumo LIRAa)
+(Configurar Estratos) ..> (Configurar Bairros)
 admin --> (Gerenciar Dashboards)
-system --> (Enviar dados LIRAa)
+admin --> (Listar dados LIRAa)
+admin --> (Deletar dados LIRAa)
+system ----> (Enviar dados LIRAa)
 @enduml
